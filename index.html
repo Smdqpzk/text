@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高中學測單字記憶卡</title>
+    <title>高中學測單字記憶卡 - A-Z排序 (支援深淺色切換)</title>
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -407,7 +407,7 @@
 <body data-theme="light">
 
     <div class="container">
-        <h1>學測單字記憶卡</h1>
+        <h1>📚 高中學測單字記憶卡</h1>
 
         <!-- 頂端功能列與同步按鈕 -->
         <div class="top-action-bar">
@@ -477,15 +477,15 @@
 
         <!-- 控制按鈕 -->
         <div class="controls">
-            <button class="btn-prev" onclick="prevCard()">上一張</button>
+            <button class="btn-prev" onclick="prevCard()">⬅️ 上一張</button>
             <button class="btn-unknown" onclick="markStatus(false)">❌ 未熟</button>
             <button class="btn-known" onclick="markStatus(true)">✔️ 記住了</button>
-            <button class="btn-next" onclick="nextCard()">下一張</button>
+            <button class="btn-next" onclick="nextCard()">下一張 ➡️</button>
         </div>
 
         <!-- 頁碼式單字列表區 -->
         <div class="word-list">
-            <h3>📋 單字清單快速導覽（頁碼式）</h3>
+            <h3>📋 單字清單快速導覽（A-Z 排序）</h3>
             <div id="wordListContainer">
                 <!-- 動態生成清單 -->
             </div>
@@ -500,24 +500,24 @@
             { word: "Benefit", meaning: "對...有益；獲益", example: "Reading books benefits our minds.", category: "動詞", known: false },
             { word: "Calculate", meaning: "計算", example: "Can you calculate the total cost?", category: "動詞", known: false },
             { word: "Determine", meaning: "決定；決心", example: "She is determined to pass the exam.", category: "動詞", known: false },
-            { word: "Generate", meaning: "產生；引起", example: "The solar panels generate electricity.", category: "動詞", known: false },
-            { word: "Negotiate", meaning: "談判；協商", example: "The two countries agreed to negotiate.", category: "動詞", known: false },
-            { word: "Participate", meaning: "參與；參加", example: "Everyone is encouraged to participate in the discussion.", category: "動詞", known: false },
             { word: "Environment", meaning: "環境", example: "We should protect our natural environment.", category: "名詞", known: false },
+            { word: "Furthermore", meaning: "此外；再者", example: "The plan is risky. Furthermore, it is too expensive.", category: "轉折詞", known: false },
+            { word: "Generate", meaning: "產生；引起", example: "The solar panels generate electricity.", category: "動詞", known: false },
+            { word: "However", meaning: "然而；不過", example: "He tried hard; however, he failed.", category: "轉折詞", known: false },
+            { word: "In addition", meaning: "此外", example: "In addition, she speaks fluent French.", category: "片語", known: false },
             { word: "Journal", meaning: "雜誌；期刊；日誌", example: "She keeps a daily journal.", category: "名詞", known: false },
-            { word: "Technology", meaning: "科技", example: "Modern technology makes our lives easier.", category: "名詞", known: false },
+            { word: "Maximum", meaning: "最大值；最大量的", example: "The maximum speed limit is 100 km/h.", category: "副詞", known: false },
+            { word: "Negotiate", meaning: "談判；協商", example: "The two countries agreed to negotiate.", category: "動詞", known: false },
             { word: "Obvious", meaning: "明顯的", example: "It was obvious that he was tired.", category: "形容詞", known: false },
+            { word: "Participate", meaning: "參與；參加", example: "Everyone is encouraged to participate in the discussion.", category: "動詞", known: false },
             { word: "Significant", meaning: "重要的；顯著的", example: "There has been a significant change in weather.", category: "形容詞", known: false },
+            { word: "Technology", meaning: "科技", example: "Modern technology makes our lives easier.", category: "名詞", known: false },
             { word: "Unique", meaning: "獨特的", example: "Every snowflake has a unique shape.", category: "形容詞", known: false },
             { word: "Valuable", meaning: "有價值的；寶貴的", example: "Time is more valuable than money.", category: "形容詞", known: false },
-            { word: "Maximum", meaning: "最大值；最大量的", example: "The maximum speed limit is 100 km/h.", category: "副詞", known: false },
-            { word: "As a result", meaning: "因此；結果", example: "It rained heavily; as a result, the game was canceled.", category: "片語", known: false },
-            { word: "In addition", meaning: "此外", example: "In addition, she speaks fluent French.", category: "片語", known: false },
-            { word: "However", meaning: "然而；不過", example: "He tried hard; however, he failed.", category: "轉折詞", known: false },
-            { word: "Furthermore", meaning: "此外；再者", example: "The plan is risky. Furthermore, it is too expensive.", category: "轉折詞", known: false }
+            { word: "As a result", meaning: "因此；結果", example: "It rained heavily; as a result, the game was canceled.", category: "片語", known: false }
         ];
 
-        let words = JSON.parse(localStorage.getItem('csat_vocabulary_list_v3')) || defaultCsatWords;
+        let words = JSON.parse(localStorage.getItem('csat_vocabulary_list_v4')) || defaultCsatWords;
         let currentTheme = localStorage.getItem('csat_vocabulary_theme') || 'light';
 
         let currentIndex = 0;
@@ -562,10 +562,12 @@
         setTheme(currentTheme);
 
         function getFilteredWords() {
-            if (currentFilter === 'all') {
-                return words;
+            let filtered = words;
+            if (currentFilter !== 'all') {
+                filtered = words.filter(item => item.category === currentFilter);
             }
-            return words.filter(item => item.category === currentFilter);
+            // 每次取得資料時依照單字字母順序 (A-Z) 排序
+            return [...filtered].sort((a, b) => a.word.localeCompare(b.word, 'en', { sensitivity: 'base' }));
         }
 
         function filterWords() {
@@ -693,8 +695,12 @@
             categoryFilter.value = currentFilter;
             
             const filteredWords = getFilteredWords();
-            currentIndex = filteredWords.length - 1;
-            currentListPage = Math.ceil(filteredWords.length / itemsPerPage);
+            // 自動跳轉到新增單字排序後的對應位置
+            const newIndex = filteredWords.findIndex(w => w.word === words[words.length - 1].word);
+            if (newIndex !== -1) {
+                currentIndex = newIndex;
+                currentListPage = Math.floor(newIndex / itemsPerPage) + 1;
+            }
             updateCard();
         }
 
@@ -794,7 +800,7 @@
 
             if (totalPages > 1) {
                 for (let i = 1; i <= totalPages; i++) {
-                    const pageBtn = document.button ? document.createElement('button') : document.createElement('button');
+                    const pageBtn = document.createElement('button');
                     pageBtn.className = `page-btn ${i === currentListPage ? 'active' : ''}`;
                     pageBtn.textContent = i;
                     pageBtn.onclick = () => changePage(i);
@@ -804,7 +810,7 @@
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('csat_vocabulary_list_v3', JSON.stringify(words));
+            localStorage.setItem('csat_vocabulary_list_v4', JSON.stringify(words));
         }
 
         updateCard();
