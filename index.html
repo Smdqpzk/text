@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>單字記憶卡</title>
+    <title>學測單字記憶卡</title>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -514,12 +514,19 @@
             border-color: var(--primary-color);
             box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
         }
+        
+        .page-ellipsis {
+            padding: 6px 4px;
+            color: var(--gray-color);
+            font-size: 13px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body data-theme="light">
 
     <div class="container">
-        <h1>單字記憶卡</h1>
+        <h1>學測單字記憶卡</h1>
 
         <!-- 頂端功能列與同步按鈕 -->
         <div class="top-action-bar">
@@ -734,13 +741,11 @@
             updateCard();
         }
 
-        // 動態計算並顯示對應範圍的進度
         function updateOverallProgress() {
             const cVal = categoryFilter.value;
             let targetGroup = words;
             let labelPrefix = "整體";
 
-            // 如果選了特定詞性，以該詞性範圍計算
             if (cVal !== 'all') {
                 targetGroup = words.filter(w => w.category === cVal);
                 labelPrefix = cVal;
@@ -873,7 +878,6 @@
                 return;
             }
 
-            // 檢查字庫中是否已存在相同的單字（不分大小寫）
             const isDuplicate = words.some(item => item.word.toLowerCase() === newWordValue.toLowerCase());
             if (isDuplicate) {
                 alert(`字庫中已經存在「${newWordValue}」這個單字了！`);
@@ -1001,14 +1005,57 @@
                 wordListContainer.appendChild(div);
             });
 
+            // 限制最多顯示 9 個頁碼按鈕的邏輯
             if (totalPages > 1) {
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageBtn = document.createElement('button');
-                    pageBtn.className = `page-btn ${i === currentListPage ? 'active' : ''}`;
-                    pageBtn.textContent = i;
-                    pageBtn.onclick = () => changePage(i);
-                    paginationContainer.appendChild(pageBtn);
+                let pagesToShow = [];
+                const maxVisiblePages = 9;
+
+                if (totalPages <= maxVisiblePages) {
+                    pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1);
+                } else {
+                    // 當總頁數大於 9 頁時，採用動態縮減範圍
+                    let startPage = Math.max(1, currentListPage - 4);
+                    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                    if (endPage - startPage + 1 < maxVisiblePages) {
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                    }
+
+                    if (startPage > 1) {
+                        pagesToShow.push(1);
+                        if (startPage > 2) pagesToShow.push('...');
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        if (i !== 1 && i !== totalPages) {
+                            pagesToShow.push(i);
+                        }
+                    }
+
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) pagesToShow.push('...');
+                        pagesToShow.push(totalPages);
+                    }
+                    
+                    // 確保首尾頁固定顯示
+                    if (!pagesToShow.includes(1)) pagesToShow.unshift(1);
+                    if (!pagesToShow.includes(totalPages)) pagesToShow.push(totalPages);
                 }
+
+                pagesToShow.forEach(page => {
+                    if (page === '...') {
+                        const ellipsis = document.createElement('span');
+                        ellipsis.className = 'page-ellipsis';
+                        ellipsis.textContent = '...';
+                        paginationContainer.appendChild(ellipsis);
+                    } else {
+                        const pageBtn = document.createElement('button');
+                        pageBtn.className = `page-btn ${page === currentListPage ? 'active' : ''}`;
+                        pageBtn.textContent = page;
+                        pageBtn.onclick = () => changePage(page);
+                        paginationContainer.appendChild(pageBtn);
+                    }
+                });
             }
         }
 
