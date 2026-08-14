@@ -1013,7 +1013,6 @@
                 if (totalPages <= maxVisiblePages) {
                     pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1);
                 } else {
-                    // 當總頁數大於 9 頁時，採用動態縮減範圍
                     let startPage = Math.max(1, currentListPage - 4);
                     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
@@ -1037,7 +1036,6 @@
                         pagesToShow.push(totalPages);
                     }
                     
-                    // 確保首尾頁固定顯示
                     if (!pagesToShow.includes(1)) pagesToShow.unshift(1);
                     if (!pagesToShow.includes(totalPages)) pagesToShow.push(totalPages);
                 }
@@ -1052,7 +1050,13 @@
                         const pageBtn = document.createElement('button');
                         pageBtn.className = `page-btn ${page === currentListPage ? 'active' : ''}`;
                         pageBtn.textContent = page;
-                        pageBtn.onclick = () => changePage(page);
+                        
+                        // 加入 event.preventDefault() 防止點擊時畫面跳動
+                        pageBtn.onclick = (event) => {
+                            event.preventDefault();
+                            changePage(page);
+                        };
+                        
                         paginationContainer.appendChild(pageBtn);
                     }
                 });
