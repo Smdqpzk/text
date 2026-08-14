@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高中學測單字記憶卡 - A-Z排序 (支援深淺色切換)</title>
+    <title>高中學測單字記憶卡</title>
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -407,7 +407,7 @@
 <body data-theme="light">
 
     <div class="container">
-        <h1>📚 高中學測單字記憶卡</h1>
+        <h1>學測單字記憶卡</h1>
 
         <!-- 頂端功能列與同步按鈕 -->
         <div class="top-action-bar">
@@ -477,15 +477,15 @@
 
         <!-- 控制按鈕 -->
         <div class="controls">
-            <button class="btn-prev" onclick="prevCard()">⬅️ 上一張</button>
+            <button class="btn-prev" onclick="prevCard()">上一張</button>
             <button class="btn-unknown" onclick="markStatus(false)">❌ 未熟</button>
             <button class="btn-known" onclick="markStatus(true)">✔️ 記住了</button>
-            <button class="btn-next" onclick="nextCard()">下一張 ➡️</button>
+            <button class="btn-next" onclick="nextCard()">下一張</button>
         </div>
 
         <!-- 頁碼式單字列表區 -->
         <div class="word-list">
-            <h3>📋 單字清單快速導覽（A-Z 排序）</h3>
+            <h3>單字清單快速導覽（A-Z 排序）</h3>
             <div id="wordListContainer">
                 <!-- 動態生成清單 -->
             </div>
