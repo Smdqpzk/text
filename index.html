@@ -865,14 +865,24 @@
             const exampleInput = document.getElementById('inputExample');
             const categoryInput = document.getElementById('inputCategory');
 
-            if (!wordInput.value || !meaningInput.value) {
+            const newWordValue = wordInput.value.trim();
+            const newMeaningValue = meaningInput.value.trim();
+
+            if (!newWordValue || !newMeaningValue) {
                 alert("請至少填寫「單字」與「中文意思」！");
                 return;
             }
 
+            // 檢查字庫中是否已存在相同的單字（不分大小寫）
+            const isDuplicate = words.some(item => item.word.toLowerCase() === newWordValue.toLowerCase());
+            if (isDuplicate) {
+                alert(`字庫中已經存在「${newWordValue}」這個單字了！`);
+                return;
+            }
+
             words.push({
-                word: wordInput.value.trim(),
-                meaning: meaningInput.value.trim(),
+                word: newWordValue,
+                meaning: newMeaningValue,
                 example: exampleInput.value.trim(),
                 category: categoryInput.value,
                 known: false
