@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高中學測單字記憶卡</title>
+    <title>學測單字記憶卡</title>
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -384,7 +384,7 @@
 
         .page-btn {
             background-color: var(--border-color);
-            color: var(--text-color);
+            color: var(--text-key);
             border: none;
             padding: 6px 10px;
             border-radius: 6px;
@@ -517,8 +517,13 @@
             { word: "As a result", meaning: "因此；結果", example: "It rained heavily; as a result, the game was canceled.", category: "片語", known: false }
         ];
 
-        let words = JSON.parse(localStorage.getItem('csat_vocabulary_list_v4')) || defaultCsatWords;
-        let currentTheme = localStorage.getItem('csat_vocabulary_theme') || 'light';
+        // 🌟 這裡使用一個永不變動的固定名稱 "csat_vocabulary_permanent_storage"
+        // 確保以後每次更新程式碼，都不會因為版本號改變而讀不到舊資料
+        const STORAGE_KEY = 'csat_vocabulary_permanent_storage';
+        const THEME_KEY = 'csat_vocabulary_permanent_theme';
+
+        let words = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultCsatWords;
+        let currentTheme = localStorage.getItem(THEME_KEY) || 'light';
 
         let currentIndex = 0;
         let isFlipped = false;
@@ -543,7 +548,7 @@
         function setTheme(theme) {
             currentTheme = theme;
             document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('csat_vocabulary_theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
             if (theme === 'dark') {
                 themeToggleBtn.textContent = '☀️ 切換淺色';
             } else {
@@ -566,7 +571,6 @@
             if (currentFilter !== 'all') {
                 filtered = words.filter(item => item.category === currentFilter);
             }
-            // 每次取得資料時依照單字字母順序 (A-Z) 排序
             return [...filtered].sort((a, b) => a.word.localeCompare(b.word, 'en', { sensitivity: 'base' }));
         }
 
@@ -695,7 +699,6 @@
             categoryFilter.value = currentFilter;
             
             const filteredWords = getFilteredWords();
-            // 自動跳轉到新增單字排序後的對應位置
             const newIndex = filteredWords.findIndex(w => w.word === words[words.length - 1].word);
             if (newIndex !== -1) {
                 currentIndex = newIndex;
@@ -810,7 +813,7 @@
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('csat_vocabulary_list_v4', JSON.stringify(words));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
         }
 
         updateCard();
