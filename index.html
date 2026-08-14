@@ -46,382 +46,46 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
+        .container { width: 100%; max-width: 600px; }
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 20px; }
 
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
+        .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+        .btn-action { background-color: #4b5563; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
 
-        /* 頂端功能列 */
-        .top-action-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
+        .filter-section { background: var(--card-bg); padding: 12px 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .filter-row { display: flex; align-items: center; gap: 10px; }
+        .filter-row select, .filter-row input { flex: 1; padding: 8px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 6px; }
 
-        .btn-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
+        .add-card-form { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .add-card-form input, .add-card-form select { padding: 10px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 6px; }
+        .add-card-form button { padding: 10px; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; }
 
-        .btn-action {
-            background-color: #4b5563;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
+        .stats-bar { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: var(--gray-color); }
+        .progress-bar-bg { background: var(--border-color); height: 8px; border-radius: 4px; margin-bottom: 12px; overflow: hidden; }
+        #progressBarFill { background: #10b981; height: 100%; width: 0%; transition: width 0.3s; }
 
-        .btn-action:hover {
-            background-color: #374151;
-        }
+        .flashcard-container { perspective: 1000px; width: 100%; height: 250px; margin-bottom: 15px; cursor: pointer; }
+        .flashcard { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 20px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card-back { transform: rotateY(180deg); background-color: var(--card-back-bg); color: var(--card-back-color); }
+        .word { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+        .meaning { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+        
+        .controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .controls button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; }
+        .btn-prev, .btn-next { background-color: #6b7280; }
+        .btn-known { background-color: #10b981; }
+        .btn-unknown { background-color: #ef4444; }
 
-        .btn-sync {
-            background-color: #0d9488;
-        }
-        .btn-sync:hover {
-            background-color: #0f766e;
-        }
-
-        .btn-theme {
-            background-color: #7c3aed;
-        }
-        .btn-theme:hover {
-            background-color: #6d28d9;
-        }
-
-        /* 篩選與搜尋列 */
-        .filter-section {
-            background: var(--card-bg);
-            padding: 12px 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .filter-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .filter-row select, .filter-row input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        /* 新增單字表單 */
-        .add-card-form {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .add-card-form h3 {
-            margin-top: 0;
-            margin-bottom: 5px;
-            font-size: 16px;
-            color: var(--text-color);
-        }
-
-        .add-card-form input, .add-card-form select {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border-radius: 6px;
-            font-size: 15px;
-        }
-
-        .add-card-form button {
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .add-card-form button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* 統計與狀態 */
-        .stats-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--gray-color);
-            padding: 0 4px;
-        }
-
-        /* 簡易進度條 */
-        .progress-bar-bg {
-            background: var(--border-color);
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
-        #progressBarFill {
-            background: #10b981;
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s;
-        }
-
-        /* 單字卡本體 */
-        .flashcard-container {
-            perspective: 1000px;
-            width: 100%;
-            height: 250px;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-
-        .flashcard {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
-            border-radius: 16px;
-        }
-
-        .flashcard.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: var(--card-bg);
-            color: var(--text-color);
-            border-radius: 16px;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .card-back {
-            transform: rotateY(180deg);
-            background-color: var(--card-back-bg);
-            color: var(--card-back-color);
-        }
-
-        .word {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .badge-container {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .badge {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        .badge-pos {
-            background-color: #0d9488;
-        }
-
-        .meaning {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .example {
-            font-size: 14px;
-            color: inherit;
-            opacity: 0.9;
-            font-style: italic;
-        }
-
-        .hint {
-            font-size: 12px;
-            color: var(--gray-color);
-            margin-top: 15px;
-        }
-
-        /* 按鈕控制區 */
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .controls button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            transition: opacity 0.2s, transform 0.1s;
-        }
-
-        .controls button:active {
-            transform: scale(0.98);
-        }
-
-        .btn-prev, .btn-next {
-            background-color: #6b7280;
-        }
-
-        .btn-known {
-            background-color: #10b981;
-        }
-
-        .btn-unknown {
-            background-color: #ef4444;
-        }
-
-        .controls button:hover {
-            opacity: 0.9;
-        }
-
-        /* 頁碼式單字列表區 */
-        .word-list {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: background-color 0.3s;
-        }
-
-        .word-list h3 {
-            margin-top: 0;
-            font-size: 15px;
-            color: var(--text-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-        }
-
-        .word-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 4px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        .word-item:last-child {
-            border-bottom: none;
-        }
-
-        .word-btn {
-            background: none;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            color: var(--text-color);
-            flex: 1;
-            padding: 4px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-
-        .word-btn:hover {
-            background-color: var(--item-hover-bg);
-            color: var(--primary-color);
-        }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 13px;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .delete-btn:hover {
-            background-color: rgba(239, 68, 68, 0.2);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .page-btn {
-            background-color: var(--border-color);
-            color: var(--text-color);
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .page-btn:hover {
-            opacity: 0.8;
-        }
-
-        .page-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-        }
+        .word-list { background: var(--card-bg); padding: 15px; border-radius: 12px; }
+        .word-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--border-color); }
+        .word-item.active { background-color: var(--current-item-bg); }
+        .word-btn { background: none; border: none; text-align: left; cursor: pointer; color: var(--text-color); flex: 1; padding: 4px; }
+        .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 15px; }
+        .page-btn { background-color: var(--border-color); padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+        .page-btn.active { background-color: var(--primary-color); color: white; }
     </style>
 </head>
 <body data-theme="light">
@@ -430,33 +94,26 @@
         <h1>學測單字記憶卡</h1>
 
         <div class="top-action-bar">
-            <span style="font-size: 13px; color: var(--gray-color);">資料管理</span>
+            <span>資料管理</span>
             <div class="btn-group">
-                <button class="btn-action btn-theme" onclick="toggleTheme()" id="themeToggleBtn">🌙 切換深色</button>
-                <button class="btn-action btn-sync" onclick="exportData()">匯出</button>
-                <button class="btn-action btn-sync" onclick="document.getElementById('importFile').click()">匯入</button>
+                <button class="btn-action" onclick="toggleTheme()" id="themeToggleBtn">🌙 切換主題</button>
+                <button class="btn-action" onclick="exportData()">匯出</button>
+                <button class="btn-action" onclick="document.getElementById('importFile').click()">匯入</button>
                 <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                <button class="btn-action" onclick="loadDefaultWords()">重置</button>
             </div>
         </div>
 
-        <!-- 篩選與搜尋區 -->
         <div class="filter-section">
             <div class="filter-row">
-                <label style="font-weight: bold; font-size: 14px;">詞性：</label>
                 <select id="categoryFilter" onchange="filterWords()">
-                    <option value="all">全部</option>
+                    <option value="all">所有詞性</option>
                     <option value="動詞">動詞</option>
                     <option value="名詞">名詞</option>
                     <option value="形容詞">形容詞</option>
                     <option value="副詞">副詞</option>
                     <option value="片語">片語</option>
-                    <option value="轉折詞">轉折詞</option>
                 </select>
-            </div>
-            <div class="filter-row">
-                <label style="font-weight: bold; font-size: 14px;">搜尋：</label>
-                <input type="text" id="searchInput" placeholder="輸入單字或中文進行搜尋..." oninput="filterWords()">
+                <input type="text" id="searchInput" placeholder="搜尋單字..." oninput="filterWords()">
             </div>
         </div>
 
@@ -464,37 +121,31 @@
             <h3>➕ 新增單字</h3>
             <input type="text" id="inputWord" placeholder="單字">
             <input type="text" id="inputMeaning" placeholder="中文意思">
-            <input type="text" id="inputExample" placeholder="例句 (選填)">
+            <input type="text" id="inputExample" placeholder="例句">
             <select id="inputCategory">
                 <option value="動詞">動詞</option>
                 <option value="名詞">名詞</option>
                 <option value="形容詞">形容詞</option>
                 <option value="副詞">副詞</option>
                 <option value="片語">片語</option>
-                <option value="轉折詞">轉折詞</option>
             </select>
             <button onclick="addWord()">加入字庫</button>
         </div>
 
-        <!-- 統計與進度條 -->
         <div class="stats-bar">
             <span id="cardCount">進度: 0 / 0</span>
             <span id="percentText">0%</span>
         </div>
-        <div class="progress-bar-bg">
-            <div id="progressBarFill"></div>
-        </div>
+        <div class="progress-bar-bg"><div id="progressBarFill"></div></div>
 
         <div class="flashcard-container" onclick="flipCard()">
             <div class="flashcard" id="flashcard">
                 <div class="card-face card-front">
-                    <div class="badge-container"><span class="badge badge-pos" id="displayCategory">動詞</span></div>
-                    <div class="word" id="displayWord">載入中...</div>
-                    <div class="hint">💡 點擊翻面</div>
+                    <div class="word" id="displayWord">請匯入或新增單字</div>
                 </div>
                 <div class="card-face card-back">
-                    <div class="meaning" id="displayMeaning">請稍候</div>
-                    <div class="example" id="displayExample"></div>
+                    <div class="meaning" id="displayMeaning">內容顯示於此</div>
+                    <div id="displayExample"></div>
                 </div>
             </div>
         </div>
@@ -514,76 +165,82 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'csat_vocabulary_permanent_storage';
-        const THEME_KEY = 'csat_vocabulary_permanent_theme';
+        const STORAGE_KEY = 'csat_vocabulary_v1';
+        const THEME_KEY = 'csat_theme';
 
-        let words = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
-            { word: "Acknowledge", meaning: "承認", example: "He acknowledged his mistake.", category: "動詞", known: false }
-        ];
-        
+        let words = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         let currentIndex = 0;
-        let isFlipped = false;
-        let currentFilter = 'all';
-        let searchQuery = '';
-        let currentListPage = 1;
+        let currentPage = 1;
         const itemsPerPage = 5;
 
-        function getFilteredWords() {
-            let filtered = words;
-            if (currentFilter !== 'all') filtered = filtered.filter(i => i.category === currentFilter);
-            if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                filtered = filtered.filter(i => i.word.toLowerCase().includes(q) || i.meaning.toLowerCase().includes(q));
-            }
-            return filtered.sort((a, b) => a.word.localeCompare(b.word));
-        }
+        // Initialize Theme
+        const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
 
-        function filterWords() {
-            currentFilter = document.getElementById('categoryFilter').value;
-            searchQuery = document.getElementById('searchInput').value;
-            currentIndex = 0;
-            currentListPage = 1;
-            updateCard();
+        function getFilteredWords() {
+            let cat = document.getElementById('categoryFilter').value;
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            return words.filter(w => (cat === 'all' || w.category === cat) && (w.word.toLowerCase().includes(query) || w.meaning.includes(query)));
         }
 
         function updateCard() {
             const filtered = getFilteredWords();
+            const display = document.getElementById('flashcard');
+            display.classList.remove('flipped');
+            
+            if (filtered.length === 0) {
+                document.getElementById('displayWord').textContent = "無符合項目";
+                document.getElementById('displayMeaning').textContent = "";
+                document.getElementById('cardCount').textContent = "進度: 0 / 0";
+            } else {
+                if (currentIndex >= filtered.length) currentIndex = filtered.length - 1;
+                const c = filtered[currentIndex];
+                document.getElementById('displayWord').textContent = c.word;
+                document.getElementById('displayMeaning').textContent = c.meaning;
+                document.getElementById('displayExample').textContent = c.example;
+                document.getElementById('cardCount').textContent = `進度: ${currentIndex + 1} / ${filtered.length}`;
+            }
+
             const totalKnown = words.filter(w => w.known).length;
             const percent = words.length > 0 ? Math.round((totalKnown / words.length) * 100) : 0;
-            
             document.getElementById('progressBarFill').style.width = percent + "%";
             document.getElementById('percentText').textContent = percent + "%";
-
-            if (filtered.length === 0) {
-                displayWord.textContent = "無符合單字";
-                cardCount.textContent = "進度: 0 / 0";
-            } else {
-                if (currentIndex >= filtered.length) currentIndex = 0;
-                const c = filtered[currentIndex];
-                displayWord.textContent = c.word;
-                displayMeaning.textContent = c.meaning;
-                displayExample.textContent = c.example;
-                displayCategory.textContent = c.category;
-                cardCount.textContent = `進度: ${currentIndex + 1} / ${filtered.length}`;
-            }
-            
-            renderWordList();
-            save();
+            renderList();
         }
 
-        function markStatus(status) {
+        function renderList() {
             const filtered = getFilteredWords();
-            if (filtered.length === 0) return;
-            const target = words.find(w => w.word === filtered[currentIndex].word);
-            target.known = status;
-            updateCard();
-            if (status) nextCard();
+            const container = document.getElementById('wordListContainer');
+            const pagContainer = document.getElementById('paginationContainer');
+            container.innerHTML = "";
+            pagContainer.innerHTML = "";
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageItems = filtered.slice(start, start + itemsPerPage);
+
+            pageItems.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = `word-item ${ (currentIndex === (start + idx)) ? 'active' : '' }`;
+                div.innerHTML = `<button class="word-btn" onclick="jumpTo(${start + idx})">${item.word}</button>
+                                 <button onclick="deleteWord('${item.word}')">🗑️</button>`;
+                container.appendChild(div);
+            });
+
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            for(let i=1; i<=totalPages; i++) {
+                const b = document.createElement('button');
+                b.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                b.textContent = i;
+                b.onclick = () => { currentPage = i; renderList(); };
+                pagContainer.appendChild(b);
+            }
         }
 
+        function jumpTo(idx) { currentIndex = idx; updateCard(); }
+        function filterWords() { currentIndex = 0; currentPage = 1; updateCard(); }
         function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
-        function nextCard() { currentIndex++; updateCard(); }
-        function prevCard() { currentIndex--; updateCard(); }
-        function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(words)); }
+        function nextCard() { const f = getFilteredWords(); if(currentIndex < f.length - 1) currentIndex++; updateCard(); }
+        function prevCard() { if(currentIndex > 0) currentIndex--; updateCard(); }
         
         function addWord() {
             words.push({
@@ -593,27 +250,39 @@
                 category: document.getElementById('inputCategory').value,
                 known: false
             });
-            updateCard();
+            save(); updateCard();
         }
 
-        function renderWordList() {
-            const list = document.getElementById('wordListContainer');
-            list.innerHTML = "";
-            const filtered = getFilteredWords();
-            filtered.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'word-item';
-                div.innerHTML = `<button class="word-btn" onclick="currentIndex=${idx};updateCard();">${item.word} - ${item.meaning} ${item.known ? '✅' : ''}</button>`;
-                list.appendChild(div);
-            });
+        function deleteWord(word) {
+            words = words.filter(w => w.word !== word);
+            save(); updateCard();
         }
 
+        function markStatus(s) { words.find(w => w.word === getFilteredWords()[currentIndex].word).known = s; save(); updateCard(); }
+        
+        function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(words)); }
+        
         function toggleTheme() {
             const t = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             document.body.setAttribute('data-theme', t);
             localStorage.setItem(THEME_KEY, t);
         }
-        
+
+        function exportData() {
+            const blob = new Blob([JSON.stringify(words)], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'vocabulary.json';
+            a.click();
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => { words = JSON.parse(e.target.result); save(); updateCard(); };
+            reader.readAsText(file);
+        }
+
         updateCard();
     </script>
 </body>
