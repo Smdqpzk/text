@@ -367,7 +367,6 @@
             <div class="flashcard" id="flashcard">
                 <div class="card-face card-front">
                     <div class="badge-container">
-                        <span class="badge" id="displayLevel">Level 1</span>
                         <span class="badge badge-pos" id="displayCategory">動詞</span>
                     </div>
                     <div class="word" id="displayWord">載入中...</div>
@@ -399,25 +398,25 @@
 
     <script>
         const defaultCsatWords = [
-            { word: "Acknowledge", meaning: "承認；感謝", example: "He acknowledged his mistake.", category: "動詞", level: "Level 1", known: false },
-            { word: "Benefit", meaning: "對...有益；獲益", example: "Reading books benefits our minds.", category: "動詞", level: "Level 1", known: false },
-            { word: "Calculate", meaning: "計算", example: "Can you calculate the total cost?", category: "動詞", level: "Level 1", known: false },
-            { word: "Determine", meaning: "決定；決心", example: "She is determined to pass the exam.", category: "動詞", level: "Level 2", known: false },
-            { word: "Generate", meaning: "產生；引起", example: "The solar panels generate electricity.", category: "動詞", level: "Level 3", known: false },
-            { word: "Negotiate", meaning: "談判；協商", example: "The two countries agreed to negotiate.", category: "動詞", level: "Level 4", known: false },
-            { word: "Participate", meaning: "參與；參加", example: "Everyone is encouraged to participate in the discussion.", category: "動詞", level: "Level 5", known: false },
-            { word: "Environment", meaning: "環境", example: "We should protect our natural environment.", category: "名詞", level: "Level 2", known: false },
-            { word: "Journal", meaning: "雜誌；期刊；日誌", example: "She keeps a daily journal.", category: "名詞", level: "Level 3", known: false },
-            { word: "Technology", meaning: "科技", example: "Modern technology makes our lives easier.", category: "名詞", level: "Level 6", known: false },
-            { word: "Obvious", meaning: "明顯的", example: "It was obvious that he was tired.", category: "形容詞", level: "Level 4", known: false },
-            { word: "Significant", meaning: "重要的；顯著的", example: "There has been a significant change in weather.", category: "形容詞", level: "Level 5", known: false },
-            { word: "Unique", meaning: "獨特的", example: "Every snowflake has a unique shape.", category: "形容詞", level: "Level 6", known: false },
-            { word: "Valuable", meaning: "有價值的；寶貴的", example: "Time is more valuable than money.", category: "形容詞", level: "Level 7", known: false },
-            { word: "Maximum", meaning: "最大值；最大量的", example: "The maximum speed limit is 100 km/h.", category: "副詞", level: "Level 4", known: false },
-            { word: "As a result", meaning: "因此；結果", example: "It rained heavily; as a result, the game was canceled.", category: "片語", level: "Level 3", known: false },
-            { word: "In addition", meaning: "此外", example: "In addition, she speaks fluent French.", category: "片語", level: "Level 2", known: false },
-            { word: "However", meaning: "然而；不過", example: "He tried hard; however, he failed.", category: "轉折詞", level: "Level 1", known: false },
-            { word: "Furthermore", meaning: "此外；再者", example: "The plan is risky. Furthermore, it is too expensive.", category: "轉折詞", level: "Level 4", known: false }
+            { word: "Acknowledge", meaning: "承認；感謝", example: "He acknowledged his mistake.", category: "動詞", known: false },
+            { word: "Benefit", meaning: "對...有益；獲益", example: "Reading books benefits our minds.", category: "動詞", known: false },
+            { word: "Calculate", meaning: "計算", example: "Can you calculate the total cost?", category: "動詞", known: false },
+            { word: "Determine", meaning: "決定；決心", example: "She is determined to pass the exam.", category: "動詞", known: false },
+            { word: "Generate", meaning: "產生；引起", example: "The solar panels generate electricity.", category: "動詞", known: false },
+            { word: "Negotiate", meaning: "談判；協商", example: "The two countries agreed to negotiate.", category: "動詞", known: false },
+            { word: "Participate", meaning: "參與；參加", example: "Everyone is encouraged to participate in the discussion.", category: "動詞", known: false },
+            { word: "Environment", meaning: "環境", example: "We should protect our natural environment.", category: "名詞", known: false },
+            { word: "Journal", meaning: "雜誌；期刊；日誌", example: "She keeps a daily journal.", category: "名詞", known: false },
+            { word: "Technology", meaning: "科技", example: "Modern technology makes our lives easier.", category: "名詞", known: false },
+            { word: "Obvious", meaning: "明顯的", example: "It was obvious that he was tired.", category: "形容詞", known: false },
+            { word: "Significant", meaning: "重要的；顯著的", example: "There has been a significant change in weather.", category: "形容詞", known: false },
+            { word: "Unique", meaning: "獨特的", example: "Every snowflake has a unique shape.", category: "形容詞", known: false },
+            { word: "Valuable", meaning: "有價值的；寶貴的", example: "Time is more valuable than money.", category: "形容詞", known: false },
+            { word: "Maximum", meaning: "最大值；最大量的", example: "The maximum speed limit is 100 km/h.", category: "副詞", known: false },
+            { word: "As a result", meaning: "因此；結果", example: "It rained heavily; as a result, the game was canceled.", category: "片語", known: false },
+            { word: "In addition", meaning: "此外", example: "In addition, she speaks fluent French.", category: "片語", known: false },
+            { word: "However", meaning: "然而；不過", example: "He tried hard; however, he failed.", category: "轉折詞", known: false },
+            { word: "Furthermore", meaning: "此外；再者", example: "The plan is risky. Furthermore, it is too expensive.", category: "轉折詞", known: false }
         ];
 
         let words = JSON.parse(localStorage.getItem('csat_vocabulary_list_v2')) || defaultCsatWords;
@@ -431,7 +430,6 @@
         const displayMeaning = document.getElementById('displayMeaning');
         const displayExample = document.getElementById('displayExample');
         const displayCategory = document.getElementById('displayCategory');
-        const displayLevel = document.getElementById('displayLevel');
         const cardCount = document.getElementById('cardCount');
         const masteryStatus = document.getElementById('masteryStatus');
         const wordListContainer = document.getElementById('wordListContainer');
@@ -458,7 +456,6 @@
                 displayMeaning.textContent = "請自行新增或切換分類";
                 displayExample.textContent = "";
                 displayCategory.textContent = currentFilter;
-                displayLevel.textContent = "自訂";
                 cardCount.textContent = "進度: 0 / 0";
                 masteryStatus.textContent = "狀態: 無";
                 renderWordList();
@@ -473,7 +470,6 @@
             displayMeaning.textContent = current.meaning;
             displayExample.textContent = current.example || "";
             displayCategory.textContent = current.category || "動詞";
-            displayLevel.textContent = current.level || "Level 1";
             
             cardCount.textContent = `進度: ${currentIndex + 1} / ${filteredWords.length}`;
             masteryStatus.textContent = current.known ? "狀態: 🟢 已記住" : "狀態: 🔴 未背熟";
@@ -549,7 +545,6 @@
                 meaning: meaningInput.value.trim(),
                 example: exampleInput.value.trim(),
                 category: categoryInput.value,
-                level: "自訂",
                 known: false
             });
 
